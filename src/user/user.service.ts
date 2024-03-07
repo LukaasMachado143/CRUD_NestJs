@@ -31,6 +31,7 @@ export class UserService {
     }
 
     async show(id: number) {
+        await this.exists(id)
         return await this.dbContext.findUnique({
             where: { id },
             select: this.select
@@ -48,6 +49,10 @@ export class UserService {
     }
 
     async exists(id: number) {
-        if (!(await this.show(id))) throw new NotFoundException(`Usuário: ${id} não existe !`)
+        if (!(await this.dbContext.count({
+            where: {
+                id
+            }
+        }))) throw new NotFoundException(`Usuário: ${id} não existe !`)
     }
 }
