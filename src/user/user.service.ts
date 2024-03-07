@@ -19,7 +19,6 @@ export class UserService {
     async create(userData: CreateUserDTO) {
         return await this.dbContext.create({
             data: userData,
-            select: this.select
         })
     }
 
