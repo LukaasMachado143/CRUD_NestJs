@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
 import { UserService } from "src/user/user.service";
-
+import { compare } from "bcrypt";
 @Injectable()
 export class AuthService {
 	constructor(private readonly jwtService: JwtService, private readonly prisma: PrismaService, private readonly userService: UserService) { }
@@ -48,8 +48,8 @@ export class AuthService {
 	}
 
 	async login(email: string, password: string) {
-		const user = await this.prisma.user.findFirst({ where: { email, password } })
-		if (!user) throw new UnauthorizedException('Email ou senha inválidos')
+		const user = await this.prisma.user.findFirst({ where: { email } })
+		if (!user && await compare(password, user.password)) throw new UnauthorizedException('Email ou senha inválidos')
 		return this.createToken(user)
 	}
 
