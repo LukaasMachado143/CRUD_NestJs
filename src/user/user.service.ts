@@ -8,11 +8,6 @@ import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
 export class UserService {
 
     constructor(private readonly prisma: PrismaService) { }
-    select = {
-        id: true,
-        email: true,
-        name: true,
-    }
 
     dbContext = this.prisma.user
 
@@ -24,7 +19,6 @@ export class UserService {
 
     async list() {
         return await this.dbContext.findMany({
-            select: this.select,
             orderBy: { updatedAt: "desc" }
         })
     }
@@ -32,19 +26,18 @@ export class UserService {
     async show(id: number) {
         await this.exists(id)
         return await this.dbContext.findUnique({
-            where: { id },
-            select: this.select
+            where: { id }
         })
     }
 
     async update(id: number, userData: any) {
         await this.exists(id)
-        return this.dbContext.update({ where: { id }, data: userData, select: this.select, })
+        return this.dbContext.update({ where: { id }, data: userData })
     }
 
     async delete(id: number) {
         await this.exists(id)
-        return this.dbContext.delete({ where: { id }, select: this.select, })
+        return this.dbContext.delete({ where: { id } })
     }
 
     async exists(id: number) {
