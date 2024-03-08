@@ -11,6 +11,7 @@ import { AuthModule } from "src/auth/auth.module";
     providers: [UserService],
     exports: [UserService]
 })
+
 export class UserModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
         consumer.apply(UserIdCheckMiddleWare).forRoutes({
