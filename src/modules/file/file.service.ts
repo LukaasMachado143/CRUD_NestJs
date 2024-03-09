@@ -10,9 +10,11 @@ export class FileService {
   constructor(private readonly userService: UserService) { }
 
   async uploadProfilePhoto(photo: Express.Multer.File, id: number) {
-    const profilePhotoPath = join(__dirname, '..', '..', '..', 'uploads', 'profile-photo', `${v4()}-${photo.originalname}`)
+    const originalname = photo.originalname ?? photo[0].originalname
+    const profilePhotoPath = join(__dirname, '..', '..', '..', 'uploads', 'photo', `${v4()}-${originalname}`)
     try {
-      await writeFile(profilePhotoPath, photo.buffer);
+      const buffer = photo.buffer ?? photo[0].buffer
+      await writeFile(profilePhotoPath, buffer);
       await this.userService.update(id, { profilePhotoPath })
     } catch (error) {
       throw new InternalServerErrorException(error)
@@ -26,6 +28,16 @@ export class FileService {
         await writeFile(filePath, file.buffer);
       })
 
+    } catch (error) {
+      console.log(error)
+      throw new InternalServerErrorException(error)
+    }
+  }
+
+  async uploadFilesFields(filesFields: { photo: Express.Multer.File, files: Express.Multer.File[] }, id: number) {
+    try {
+      if (filesFields.photo) await this.uploadProfilePhoto(filesFields.photo, id)
+      if (filesFields.files) await this.uploadFiles(filesFields.files)
     } catch (error) {
       console.log(error)
       throw new InternalServerErrorException(error)

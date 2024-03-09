@@ -6,7 +6,7 @@ import { AuthResetDTO } from "./dto/auth-reset.dto";
 import { AuthService } from "./auth.service";
 import { AuthGuard } from "src/guards/auth.guard";
 import { User } from "src/decorators/user.decorator";
-import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
+import { FileFieldsInterceptor, FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { FileService } from "../file/file.service";
 
 
@@ -54,6 +54,14 @@ export class AuthController {
     @Post('uploadFiles')
     async uploadFiles(@UploadedFiles() files: Express.Multer.File[]) {
         await this.fileService.uploadFiles(files)
+        return { message: 'Inserted files' }
+    }
+
+    @UseInterceptors(FileFieldsInterceptor([{ name: 'photo', maxCount: 1 }, { name: 'files', maxCount: 5 }]))
+    @UseGuards(AuthGuard)
+    @Post('uploadFilesFields')
+    async uploadFilesFields(@User() user, @UploadedFiles() filesFields: { photo: Express.Multer.File, files: Express.Multer.File[] }) {
+        await this.fileService.uploadFilesFields(filesFields, user.id)
         return { message: 'Inserted files' }
     }
 
