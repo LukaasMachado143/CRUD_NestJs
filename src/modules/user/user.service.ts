@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "src//modules/prisma/prisma.service";
 import { hash, genSalt } from "bcrypt"
 
 @Injectable()
