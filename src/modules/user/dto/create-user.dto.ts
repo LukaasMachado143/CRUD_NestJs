@@ -21,4 +21,8 @@ export class CreateUserDTO {
     @IsOptional()
     @IsEnum(Role)
     role: number;
+
+    @IsOptional()
+    @IsString()
+    profilePhotoPath: string;
 }

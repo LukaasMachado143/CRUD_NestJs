@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Req, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthLoginDTO } from "./dto/auth-login.dto";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
 import { AuthForgetDTO } from "./dto/auth-forget.dto";
@@ -6,11 +6,14 @@ import { AuthResetDTO } from "./dto/auth-reset.dto";
 import { AuthService } from "./auth.service";
 import { AuthGuard } from "src/guards/auth.guard";
 import { User } from "src/decorators/user.decorator";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { FileService } from "../file/file.service";
+
 
 @Controller('auth')
 export class AuthController {
 
-    constructor(private readonly authService: AuthService) { }
+    constructor(private readonly authService: AuthService, private readonly fileService: FileService) { }
 
     @Post('login')
     async login(@Body() { email, password }: AuthLoginDTO) {
@@ -36,6 +39,14 @@ export class AuthController {
     @Post('me')
     async me(@User() user) {
         return { user }
+    }
+
+    @UseInterceptors(FileInterceptor('file'))
+    @UseGuards(AuthGuard)
+    @Post('uploadPhoto')
+    async uploadPhoto(@User() user, @UploadedFile() photo: Express.Multer.File) {
+        await this.fileService.uploadProfilePhoto(photo, user.id)
+        return { message: 'Ptofile photo updated' }
     }
 
 }

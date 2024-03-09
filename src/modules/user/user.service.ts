@@ -32,7 +32,7 @@ export class UserService {
 
     async update(id: number, userData: any) {
         await this.exists(id)
-        userData.password = await hash(userData.password, await genSalt())
+        if(userData.password) userData.password = await hash(userData.password, await genSalt())
         return this.dbContext.update({ where: { id }, data: userData })
     }
 
