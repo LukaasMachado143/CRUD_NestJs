@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, FileTypeValidator, MaxFileSizeValidator, ParseFilePipe, Post, Req, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthLoginDTO } from "./dto/auth-login.dto";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
 import { AuthForgetDTO } from "./dto/auth-forget.dto";
@@ -44,7 +44,7 @@ export class AuthController {
     @UseInterceptors(FileInterceptor('file'))
     @UseGuards(AuthGuard)
     @Post('uploadPhoto')
-    async uploadPhoto(@User() user, @UploadedFile() photo: Express.Multer.File) {
+    async uploadPhoto(@User() user, @UploadedFile(new ParseFilePipe({ validators: [new FileTypeValidator({ fileType: 'image/*' }), new MaxFileSizeValidator({ maxSize: 1024 * 1024 })] })) photo: Express.Multer.File) {
         await this.fileService.uploadProfilePhoto(photo, user.id)
         return { message: 'Ptofile photo updated' }
     }
