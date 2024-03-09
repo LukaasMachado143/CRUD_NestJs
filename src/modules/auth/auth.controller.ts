@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Post, Req, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthLoginDTO } from "./dto/auth-login.dto";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
 import { AuthForgetDTO } from "./dto/auth-forget.dto";
@@ -6,7 +6,7 @@ import { AuthResetDTO } from "./dto/auth-reset.dto";
 import { AuthService } from "./auth.service";
 import { AuthGuard } from "src/guards/auth.guard";
 import { User } from "src/decorators/user.decorator";
-import { FileInterceptor } from "@nestjs/platform-express";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { FileService } from "../file/file.service";
 
 
@@ -47,6 +47,14 @@ export class AuthController {
     async uploadPhoto(@User() user, @UploadedFile() photo: Express.Multer.File) {
         await this.fileService.uploadProfilePhoto(photo, user.id)
         return { message: 'Ptofile photo updated' }
+    }
+
+    @UseInterceptors(FilesInterceptor('files'))
+    @UseGuards(AuthGuard)
+    @Post('uploadFiles')
+    async uploadFiles(@UploadedFiles() files: Express.Multer.File[]) {
+        await this.fileService.uploadFiles(files)
+        return { message: 'Inserted files' }
     }
 
 }

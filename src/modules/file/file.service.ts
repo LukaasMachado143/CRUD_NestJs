@@ -18,4 +18,17 @@ export class FileService {
       throw new InternalServerErrorException(error)
     }
   }
+
+  async uploadFiles(files: Express.Multer.File[]) {
+    try {
+      files.forEach(async file => {
+        const filePath = join(__dirname, '..', '..', '..', 'uploads', 'files', `${v4()}-${file.originalname}`)
+        await writeFile(filePath, file.buffer);
+      })
+
+    } catch (error) {
+      console.log(error)
+      throw new InternalServerErrorException(error)
+    }
+  }
 }
