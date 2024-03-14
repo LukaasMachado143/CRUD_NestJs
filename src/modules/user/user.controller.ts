@@ -6,7 +6,7 @@ import { UserService } from "./user.service";
 import { LogInterceptor } from "src/interceptors/log.interceptor";
 import { ParamId } from "src/decorators/param-id.decorator";
 import { Roles } from "src/decorators/roles.decorator";
-import { Role } from "src/enums/role.enums";
+import { Role } from "src/enums/role.enum";
 import { RoleGuard } from "src/guards/role.guard";
 import { AuthGuard } from "src/guards/auth.guard";
 import { ThrottlerGuard } from "@nestjs/throttler";
