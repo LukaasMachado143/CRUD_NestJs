@@ -8,7 +8,7 @@ export class UserEntity {
   @PrimaryGeneratedColumn({
     unsigned: false,
   })
-  id: number;
+  id?: number;
 
   @Column({
     length: 63
@@ -34,8 +34,8 @@ export class UserEntity {
   profilePhotoPath: string;
 
   @CreateDateColumn()
-  createdAt: string;
+  createdAt?: Date;
 
   @UpdateDateColumn()
-  updatedAt: string;
+  updatedAt?: Date;
 }

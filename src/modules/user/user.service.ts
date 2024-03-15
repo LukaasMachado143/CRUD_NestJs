@@ -43,7 +43,8 @@ export class UserService {
 
     async delete(id: number) {
         await this.exists(id)
-        return this.userRepository.delete(id)
+        this.userRepository.delete(id)
+        return true
     }
 
     async exists(id: number) {
