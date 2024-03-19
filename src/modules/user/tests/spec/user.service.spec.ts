@@ -1,12 +1,12 @@
 import { Test, TestingModule } from "@nestjs/testing"
 import { UserService } from "../../user.service"
-import { userRepositoryMock } from "../mock/user-repository.mock"
-import { userEntityList } from "../mock/user-entity-list.mock"
-import { createUserDTO } from "../mock/create-user-dto.mock"
+import { userRepositoryMock } from "../mocks/user-repository.mock"
+import { userEntityList } from "../mocks/user-entity-list.mock"
+import { createUserDTO } from "../mocks/create-user-dto.mock"
 import { Repository } from "typeorm"
 import { UserEntity } from "../../user.entity"
 import { getRepositoryToken } from "@nestjs/typeorm"
-import { updatePatchUserDTO } from "../mock/update-user-dto.mock"
+import { updatePatchUserDTO } from "../mocks/update-user-dto.mock"
 
 
 

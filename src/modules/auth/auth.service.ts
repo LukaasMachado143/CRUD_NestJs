@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
-import { UserService } from "src/modules/user/user.service";
 import { compare, genSalt, hash } from "bcrypt";
 import { MailerService } from "@nestjs-modules/mailer";
 import { UserEntity } from "../user/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { UserService } from "../user/user.service";
 @Injectable()
 export class AuthService {
 	constructor(
@@ -67,25 +67,25 @@ export class AuthService {
 		const user = await this.userRepository.findOne({ where: { email } })
 		if (!user) throw new UnauthorizedException('Email inválidos')
 
-
-
+		const token = this.jwtService.sign(
+			{
+				id: user.id,
+			},
+			{
+				expiresIn: '30 minutes',
+				subject: String(user.id),
+				issuer: "forget",
+				audience: 'users'
+			}
+		)
+		// console.log(token)
 		await this.mailer.sendMail({
 			subject: "Recuperação de senha",
 			to: 'lukaasmachado1432@gmail.com',
 			template: 'forget',
 			context: {
 				name: user.name,
-				token: this.jwtService.sign(
-					{
-						id: user.id,
-					},
-					{
-						expiresIn: '30 minutes',
-						subject: String(user.id),
-						issuer: "forget",
-						audience: 'users'
-					}
-				)
+				token
 			}
 		})
 		return true
@@ -106,6 +106,7 @@ export class AuthService {
 	}
 
 	async register(data: AuthRegisterDTO) {
+		if (data.role) delete data.role
 		const user = await this.userService.create(data)
 		return this.createToken(user)
 
