@@ -6,7 +6,7 @@ import { createUserDTO } from "../mocks/create-user-dto.mock"
 import { Repository } from "typeorm"
 import { UserEntity } from "../../user.entity"
 import { getRepositoryToken } from "@nestjs/typeorm"
-import { updatePatchUserDTO } from "../mocks/update-user-dto.mock"
+import { updatePatchUserDTOMock } from "../mocks/update-patch-user-dto.mock"
 
 
 
@@ -58,7 +58,7 @@ describe('User Service', () => {
   describe('Update', () => {
     
     test('method update', async () => {
-      const result = await userService.update(1,updatePatchUserDTO)
+      const result = await userService.update(1,updatePatchUserDTOMock)
       expect(result).toEqual(userEntityList[0])
     })
 
