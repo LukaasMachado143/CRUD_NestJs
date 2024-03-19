@@ -16,6 +16,7 @@ export class FileService {
       const buffer = photo.buffer ?? photo[0].buffer
       await writeFile(profilePhotoPath, buffer);
       await this.userService.update(id, { profilePhotoPath })
+      return true
     } catch (error) {
       throw new InternalServerErrorException(error)
     }
@@ -27,7 +28,7 @@ export class FileService {
         const filePath = join(__dirname, '..', '..', '..', 'uploads', 'files', `${v4()}-${file.originalname}`)
         await writeFile(filePath, file.buffer);
       })
-
+      return true
     } catch (error) {
       console.log(error)
       throw new InternalServerErrorException(error)
@@ -38,6 +39,7 @@ export class FileService {
     try {
       if (filesFields.photo) await this.uploadProfilePhoto(filesFields.photo, id)
       if (filesFields.files) await this.uploadFiles(filesFields.files)
+      return true
     } catch (error) {
       console.log(error)
       throw new InternalServerErrorException(error)

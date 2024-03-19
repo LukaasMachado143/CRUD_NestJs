@@ -7,7 +7,6 @@ import { userServiceMock } from "./mocks/user-service.mock"
 import { userEntityList } from "../../user/tests/mocks/user-entity-list.mock"
 import { accessToken } from "./mocks/access-token.mock"
 import { jwtPayloadMock } from "./mocks/jwt-payload.mock"
-import { createUserDTO } from "../../user/tests/mocks/create-user-dto.mock"
 import { resetToken } from "./mocks/reset-token.mock"
 import { authRegisterDTO } from "./mocks/auth-register-dto.mock"
 

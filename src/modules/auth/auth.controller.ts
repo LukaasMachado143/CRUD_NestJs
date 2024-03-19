@@ -37,7 +37,7 @@ export class AuthController {
 
     @UseGuards(AuthGuard)
     @Post('me')
-    async me(@User() user, @Req() {tokenPayload}) {
+    async me(@User() user, @Req() { tokenPayload }) {
         return { user, tokenPayload }
     }
 
@@ -45,24 +45,24 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Post('uploadPhoto')
     async uploadPhoto(@User() user, @UploadedFile(new ParseFilePipe({ validators: [new FileTypeValidator({ fileType: 'image/*' }), new MaxFileSizeValidator({ maxSize: 1024 * 1024 })] })) photo: Express.Multer.File) {
-        await this.fileService.uploadProfilePhoto(photo, user.id)
-        return { message: 'Ptofile photo updated' }
+        const result = await this.fileService.uploadProfilePhoto(photo, user.id)
+        return { message: result ? 'Profile photo updated' : 'Profile photo NOT updated' }
     }
 
     @UseInterceptors(FilesInterceptor('files'))
     @UseGuards(AuthGuard)
     @Post('uploadFiles')
     async uploadFiles(@UploadedFiles() files: Express.Multer.File[]) {
-        await this.fileService.uploadFiles(files)
-        return { message: 'Inserted files' }
+        const result = await this.fileService.uploadFiles(files)
+        return { message: result ? 'Inserted files' : 'NOT inserted files' }
     }
 
     @UseInterceptors(FileFieldsInterceptor([{ name: 'photo', maxCount: 1 }, { name: 'files', maxCount: 5 }]))
     @UseGuards(AuthGuard)
     @Post('uploadFilesFields')
     async uploadFilesFields(@User() user, @UploadedFiles() filesFields: { photo: Express.Multer.File, files: Express.Multer.File[] }) {
-        await this.fileService.uploadFilesFields(filesFields, user.id)
-        return { message: 'Inserted files' }
+        const result = await this.fileService.uploadFilesFields(filesFields, user.id)
+        return { message: result ? 'Inserted files' : 'NOT inserted files' }
     }
 
 }
