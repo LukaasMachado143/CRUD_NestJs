@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing"
 import { FileService } from "../../file.service"
-import { userServiceMock } from "../../../auth/tests/mocks/user-service.mock"
+import { userServiceMock } from "../../../user/tests/mocks/user-service.mock"
 import { getPhoto } from "../mocks/get-photo.mock"
 import exp from "constants"
 

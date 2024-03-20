@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing"
 import { UserController } from "../../user.controller";
-import { userServiceMock } from "../../../auth/tests/mocks/user-service.mock";
+import { userServiceMock } from "../mocks/user-service.mock";
 import { AuthGuard } from "../../../../guards/auth.guard";
 import { guardMock } from "../mocks/guard.mock";
 import { RoleGuard } from "../../../../guards/role.guard";

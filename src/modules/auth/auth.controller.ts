@@ -8,6 +8,7 @@ import { FileFieldsInterceptor, FileInterceptor, FilesInterceptor } from "@nestj
 import { FileService } from "../file/file.service";
 import { AuthGuard } from "../../guards/auth.guard";
 import { User } from "../../decorators/user.decorator";
+import { UserEntity } from "../user/user.entity";
 
 
 @Controller('auth')
@@ -37,14 +38,14 @@ export class AuthController {
 
     @UseGuards(AuthGuard)
     @Post('me')
-    async me(@User() user, @Req() { tokenPayload }) {
-        return { user, tokenPayload }
+    async me(@User() user: UserEntity) {
+        return user
     }
 
     @UseInterceptors(FileInterceptor('file'))
     @UseGuards(AuthGuard)
     @Post('uploadPhoto')
-    async uploadPhoto(@User() user, @UploadedFile(new ParseFilePipe({ validators: [new FileTypeValidator({ fileType: 'image/*' }), new MaxFileSizeValidator({ maxSize: 1024 * 1024 })] })) photo: Express.Multer.File) {
+    async uploadPhoto(@User() user: UserEntity, @UploadedFile(new ParseFilePipe({ validators: [new FileTypeValidator({ fileType: 'image/*' }), new MaxFileSizeValidator({ maxSize: 1024 * 1024 })] })) photo: Express.Multer.File) {
         const result = await this.fileService.uploadProfilePhoto(photo, user.id)
         return { message: result ? 'Profile photo updated' : 'Profile photo NOT updated' }
     }

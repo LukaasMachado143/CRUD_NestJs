@@ -88,7 +88,7 @@ export class AuthService {
 				token
 			}
 		})
-		return true
+		return { success: true }
 	}
 
 
