@@ -1,5 +1,5 @@
-import { Role } from "../../../../enums/role.enum";
-import { UserEntity } from "../../user.entity";
+import { Role } from '../../../../enums/role.enum';
+import { UserEntity } from '../../user.entity';
 
 export const userEntityList: UserEntity[] = [
   {
@@ -51,5 +51,5 @@ export const userEntityList: UserEntity[] = [
     profilePhotoPath: 'Caminho da perfil 5',
     createdAt: new Date(),
     updatedAt: new Date(),
-  }
-]
+  },
+];

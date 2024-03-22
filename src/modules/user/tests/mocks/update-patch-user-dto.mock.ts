@@ -1,5 +1,5 @@
-import { Role } from "../../../../enums/role.enum";
-import { UpdatePatchUserDTO } from "../../dto/update-patch-user.dto";
+import { Role } from '../../../../enums/role.enum';
+import { UpdatePatchUserDTO } from '../../dto/update-patch-user.dto';
 
 export const updatePatchUserDTOMock: UpdatePatchUserDTO = {
   name: 'Teste 1',
@@ -7,4 +7,4 @@ export const updatePatchUserDTOMock: UpdatePatchUserDTO = {
   password: '12345678',
   role: Role.Admin,
   profilePhotoPath: 'Caminho da perfil 1',
-}
+};

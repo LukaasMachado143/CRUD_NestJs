@@ -1,4 +1,4 @@
-import { FileService } from "../../../file/file.service";
+import { FileService } from '../../../file/file.service';
 
 export const fileServiceMock = {
   provide: FileService,
@@ -6,5 +6,5 @@ export const fileServiceMock = {
     uploadProfilePhoto: jest.fn().mockResolvedValue(true),
     uploadFiles: jest.fn().mockResolvedValue(true),
     uploadFilesFields: jest.fn().mockResolvedValue(true),
-  }
-}
+  },
+};

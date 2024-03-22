@@ -1,5 +1,5 @@
-import { AuthForgetDTO } from "../../dto/auth-forget.dto";
+import { AuthForgetDTO } from '../../dto/auth-forget.dto';
 
 export const authForgetDTOMock: AuthForgetDTO = {
-  "email": "testelucas7@teste.com",
-}
+  email: 'testelucas7@teste.com',
+};

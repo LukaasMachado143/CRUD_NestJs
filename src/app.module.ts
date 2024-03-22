@@ -14,11 +14,15 @@ import { UserEntity } from './modules/user/user.entity';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: `.env${process.env.ENV === 'test' ? '.test' : ''}` }),
-    ThrottlerModule.forRoot([{
-      ttl: 60000, // em milissegundos
-      limit: 100 // quantidade 
-    }]),
+    ConfigModule.forRoot({
+      envFilePath: `.env${process.env.ENV === 'test' ? '.test' : ''}`,
+    }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000, // em milissegundos
+        limit: 100, // quantidade
+      },
+    ]),
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
     forwardRef(() => FileModule),
@@ -28,8 +32,8 @@ import { UserEntity } from './modules/user/user.entity';
         port: 587,
         auth: {
           user: 'quentin.anderson@ethereal.email',
-          pass: 'chUKjG8wG4XpybE9ES'
-        }
+          pass: 'chUKjG8wG4XpybE9ES',
+        },
       },
       defaults: {
         from: '"Crud Nest JS" <quentin.anderson@ethereal.email>',
@@ -51,14 +55,16 @@ import { UserEntity } from './modules/user/user.entity';
       database: process.env.DB_DATABASE,
       entities: [UserEntity],
       synchronize: process.env.ENV == 'development',
-
-    })
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: ThrottlerGuard
-  }],
-  exports: [AppService]
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
+  exports: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

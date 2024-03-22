@@ -1,8 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
-import { Role } from "../../enums/role.enum";
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Role } from '../../enums/role.enum';
 
 @Entity({
-  name: "users"
+  name: 'users',
 })
 export class UserEntity {
   @PrimaryGeneratedColumn({
@@ -11,7 +17,7 @@ export class UserEntity {
   id?: number;
 
   @Column({
-    length: 63
+    length: 63,
   })
   name: string;
 
@@ -23,13 +29,13 @@ export class UserEntity {
 
   @Column({
     enum: Role,
-    default: Role.User
+    default: Role.User,
   })
   role: number;
 
   @Column({
-    default: "",
-    nullable: true
+    default: '',
+    nullable: true,
   })
   profilePhotoPath: string;
 

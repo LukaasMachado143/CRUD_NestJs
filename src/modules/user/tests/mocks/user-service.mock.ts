@@ -1,5 +1,5 @@
-import { userEntityList } from "./user-entity-list.mock";
-import { UserService } from "../../user.service";
+import { userEntityList } from './user-entity-list.mock';
+import { UserService } from '../../user.service';
 
 export const userServiceMock = {
   provide: UserService,
@@ -10,5 +10,5 @@ export const userServiceMock = {
     update: jest.fn().mockResolvedValue(userEntityList[0]),
     delete: jest.fn().mockResolvedValue(true),
     exists: jest.fn().mockResolvedValue(true),
-  }
-}
+  },
+};
