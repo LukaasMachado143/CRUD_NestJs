@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Role } from "../../enums/role.enum";
 
 @Entity({
-  name: "Users"
+  name: "users"
 })
 export class UserEntity {
   @PrimaryGeneratedColumn({

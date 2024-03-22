@@ -25,9 +25,11 @@ export class Migrate1710349889519 implements MigrationInterface {
                 name: 'password',
                 type: 'varchar',
                 length: '127',
-            }, {
-                name: 'birthAt',
-                type: 'date',
+            }
+            , {
+                name: 'profilePhotoPath',
+                type: 'varchar',
+                length: '255',
                 isNullable: true
             }, {
                 name: 'role',
